@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>L11n</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mustache@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 class="mt-4 mb-4">Llamatization (L11n)</h1>
+        <div id="alert-container"></div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#search">Search</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#generate">Generate Prompt</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content mt-4">
+            <div id="search" class="container tab-pane active">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="keywordFilter">Filter by Keyword (here or click on a <span
+                                class="badge badge-primary">bubble</span>)</label>
+                        <select class="form-control" id="keywordFilter">
+                            <option value="">All Keywords</option>
+                            <!-- Additional options will be populated here -->
+                        </select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="searchInput">Search (full text)</label>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search...">
+                    </div>
+                </div>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Keywords</th>
+                        </tr>
+                    </thead>
+                    <tbody id="result">
+                    </tbody>
+                </table>
+            </div>
+            <div id="generate" class="container tab-pane fade">
+                <div id="dynamic-form-container">No prompt selected yet, go back to search.</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+
+    <!-- Add Bootstrap JS for tabs -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

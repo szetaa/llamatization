@@ -1,0 +1,57 @@
+name: 
+  en: Llama 2 entity recognition
+  de: Llama 2 Entitätenerkennung
+description: 
+  en: Provide a list of classes (e.g., [persons, places, food]) followed by a text. The model will try to return a JSON object with all found objects mapped to the respective class.
+  de: Stelle eine Liste von Klassen (z.B. [Personen, Orte, Essen]) und einen Text zur Verfügung. Das Modell wird versuchen, ein JSON-Objekt mit allen gefundenen Objekten zurückzugeben, die der jeweiligen Klasse zugeordnet sind.
+keywords: [entity_recognition, example]
+version: 1.0
+variables:
+  system_message: 
+    - tags: [en, all]
+      value: |-
+        You are an intelligent and helpful expert in named-entity-recognition. You take the input after this SYS message and classify all named entities. If provided with a list of classes (e.g., [person, year, vehicle_type]) only look for entities that match one of the given class. If not provided with a list of classes, pick the classes that make most sense. Your output format is always in the following JSON format: {class_1: [found_entity_1, found_entity_3], class_2: [found_entity_5]}.
+    - tags: [de, all]
+      value: |-
+        # (German translation of the system_message)
+  system_wrapper:
+    - tags: [en, all]
+      value: |-
+        ### Categories: {{categories}}
+        ### Text: '''{{text}}'''
+    - tags: [de, all]
+      value: |-
+        ### Kategorien: {{categories}}
+        ### Text: '''{{text}}'''
+  categories: 
+    - tags: [en, all]
+      value: [person, year, food]
+    - tags: [de, all]
+      value: [Person, Jahr, Essen]
+  text: 
+    - tags: [en, all]
+      value: Hanna's favorite dish was sushi, until in 2022 she met Josephine who showed how to prepare very good falafel.
+    - tags: [de, all]
+      value: Hannas Lieblingsgericht war Sushi, bis sie 2022 Josephine traf, die ihr zeigte, wie man sehr guten Falafel zubereitet.
+prompt_template: 
+    - tags: [gpt]
+      value: |-
+        ### System message: 
+        {{system_message}}
+        ### Human:
+        {{system_wrapper}}
+    - tags: [llama]
+      value: |-
+        [INST]
+        <<SYS>>
+        {{system_message}}
+        <</SYS>>
+        {{system_wrapper}}
+        [/INST]
+param:
+  - tags: [all]
+    temperature: 0.1
+    max_tokens: 500
+  - tags: [llama]
+    temperature: 0.1
+    max_tokens: 500
