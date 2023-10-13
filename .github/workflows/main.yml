@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main  
-      - prompts # allow building pages from prompts branch...
+      - prompts # allow building pages from prompts branch..
 
 jobs:
   build:
