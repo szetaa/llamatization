@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query, Request
+from fastapi import FastAPI, Query, Request, HTTPException
 from pydantic import BaseModel
 from jinja2 import Template, Environment, FileSystemLoader
 import yaml
@@ -25,11 +25,6 @@ with open("../app/search_index.json", "r") as f:
 with open("../config.yml", "r") as f:
     config = yaml.safe_load(f)
 
-print("CONF")
-pprint.pprint(config)
-
-pprint.pprint(search_index["prompts_example"])
-
 
 class PromptInput(BaseModel):
     prompt_key: str
@@ -41,47 +36,49 @@ class PromptInput(BaseModel):
 @app.post("/generate_prompt_debug/")
 async def generate_prompt(request: Request):
     payload = await request.json()
-    print("Raw payload:", payload)
 
 
 @app.post("/generate_prompt/")
 async def generate_prompt(prompt_input: PromptInput):
     input_dict = dict(prompt_input)
-    print(input_dict)
     prompt_file = search_index[input_dict["prompt_key"]]["file_path"]
-    print("FILE", prompt_file)
     with open(prompt_file, "r") as pf:
         prompt_yaml = yaml.safe_load(pf)
 
-    # print(prompt_file)
-    print("PROMPT INPUT", prompt_input)
+    prompt_templates = prompt_yaml.get("prompt_template")
+    if not prompt_templates:
+        specific_template = None
+    else:
+        specific_template = next(
+            (
+                template
+                for template in prompt_templates
+                if prompt_input.model in template["tags"]
+            ),
+            None,
+        )
 
-    specific_template = next(
-        (
-            template
-            for template in prompt_yaml.get("prompt_template")
-            if prompt_input.model in template["tags"]
-        ),
-        None,
-    )
-    generic_template = next(
-        (
-            template
-            for template in config.get("templates")
-            if prompt_input.model in template["models"]
-        ),
-        None,
-    )
+    config_templates = config.get("templates")
+    if not config_templates:
+        generic_template = None
+    else:
+        generic_template = next(
+            (
+                template
+                for template in config_templates
+                if prompt_input.model in template["models"]
+            ),
+            None,
+        )
 
     if specific_template:
-        print("specific:", specific_template["value"])
         selected_template = specific_template["value"]
     elif generic_template:
-        print("generic", generic_template["value"])
         selected_template = generic_template["value"]
     else:
-        print("ERROR: No tempalte found")
-        selected_template = ""
+        detail_msg = f"No prompt found for model: {prompt_input.model}"
+        print(detail_msg)
+        raise HTTPException(status_code=400, detail=detail_msg)
 
     data = {}
 
@@ -100,11 +97,9 @@ async def generate_prompt(prompt_input: PromptInput):
 
         if not found and fallback is not None:
             data[key] = fallback
-    pprint.pprint(data)
 
     for key, value in prompt_input.variables.items():
         data[key] = value
-    pprint.pprint(data)
 
     def recursive_render(template_str, context):
         template = Template(template_str)
@@ -117,9 +112,6 @@ async def generate_prompt(prompt_input: PromptInput):
             template = Template(rendered)
         return rendered
 
-    # Use Jinja2's native rendering
-    # template = Template(selected_template)
-    # rendered_prompt = template.render(**data)
     rendered_prompt = recursive_render(selected_template, data)
 
     return {"rendered_prompt": rendered_prompt}

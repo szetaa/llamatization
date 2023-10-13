@@ -36,15 +36,16 @@ for filepath in glob.iglob("prompts/**", recursive=True):
                         for field in search_fields.keys()
                     ]
                 )
-
-                result[lang][filepath.replace("/", "_").replace(".yml", "")] = {
+                _key = filepath.replace(".yml", "")
+                result[lang][_key] = {
                     field: content.get(field, {}).get(lang, search_fields[field])
                     if isinstance(content.get(field, {}), dict)
                     else content.get(field, search_fields[field])
                     for field in search_fields.keys()
                 }
-                result[lang][filepath.replace("/", "_").replace(".yml", "")].update(
+                result[lang][_key].update(
                     {
+                        "prompt_key": _key,
                         "file_path": f"../{filepath}",
                         "combined_search_field": combined_field,
                     }
