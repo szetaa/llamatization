@@ -1,0 +1,32 @@
+<div class="container mt-5">
+    <h2>{{parsedYaml.name.en}}</h2>
+    <form id="inputForm" class="mt-4">
+        <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="model">Model:</label>
+            <select class="form-control" id="model"></select>
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="language">Language:</label>
+            <select class="form-control" id="language"></select>
+        </div>
+        </div>
+        <h2>Variables</h2>
+        <div id="dynamic-fields-container">
+            {{#fields}}
+            <div class="form-group {{#isSystem}}d-none{{/isSystem}}">
+            <label for="{{name}}">{{name}}</label>
+            <textarea class="form-control updatePrompt" id="{{name}}">{{defaultValue}}</textarea>
+            </div>
+            {{/fields}}
+        </div>
+
+    </form>
+    {{#config.API_BASE}}
+        <h2>API call</h2>
+        <pre>tbd</pre>
+    {{/config.API_BASE}}
+    <h2>Prompt preview</h2>
+    <button id="copyButton" class="btn btn-primary">Copy</button>
+    <pre id="prompt_result" class="mt-4">Select a target model!</pre>
+</div>

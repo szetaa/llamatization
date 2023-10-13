@@ -1,0 +1,17 @@
+image: python:3.9  # or any other version you need
+
+pages:
+  script:
+    - pip install -r requirements.txt
+    - python create_search_index.py
+    - mkdir .public
+    - cp -r app/ .public
+    - cp -r prompts/ .public
+    - cp config.yml .public
+    - ls -al app
+    - mv .public public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main

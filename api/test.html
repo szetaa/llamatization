@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test FastAPI Call</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script>
+        async function submitForm() {
+            const promptKey = document.getElementById("prompt_key").value;
+            const language = document.getElementById("language").value;
+            const model = document.getElementById("model").value;
+
+            const payload = {
+                "prompt_key": promptKey,
+                "language": language,
+                "model": model,
+                "variables": { "student": "me", "topic": "Bicycles" }
+            };
+
+            console.log(payload)
+
+            const response = await fetch("http://localhost:8091/generate_prompt/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+            document.getElementById("result").innerText = data.rendered_prompt //JSON.stringify(data.rendered_prompt, null, 2);
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Test FastAPI Call</h1>
+
+    <form onsubmit="submitForm(); return false;">
+
+        <label for="prompt_key">Prompt Key:</label>
+        <input type="text" id="prompt_key" name="prompt_key" value="prompts_example"><br><br>
+
+        <label for="language">Language:</label>
+        <input type="text" id="language" name="language" value="en"><br><br>
+
+        <label for="model">Model:</label>
+        <input type="text" id="model" name="model" value="gpt"><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <h2>Result:</h2>
+    <pre id="result"></pre>
+
+    <h2>Expected</h2>
+    <pre class="mt-4">
+### System: my system message for all models in English
+### Human: ### Introducing your student: The student has not been specified. Assume she is called Jane, a 20 year old sushi chef.
+### Instruction:
+my system instruction for all models in English
+### teaching topic:
+relational databases
+### Your answer is required to be a bullet point list.   
+    </pre>
+
+</body>
+
+</html>
