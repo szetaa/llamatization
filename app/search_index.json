@@ -1,5 +1,5 @@
 {
-    "prompts_school_pathway": {
+    "prompts/school/pathway": {
         "de": {
             "name": "Lernpfad erstellen",
             "description": "Prompt fuer Lernpfad nach Student fuer ein gegebenes Thema erstellen.",
@@ -7,6 +7,7 @@
                 "schooling",
                 "example"
             ],
+            "prompt_key": "prompts/school/pathway",
             "file_path": "../prompts/school/pathway.yml",
             "combined_search_field": "Lernpfad erstellen Prompt fuer Lernpfad nach Student fuer ein gegebenes Thema erstellen. ['schooling', 'example']"
         },
@@ -18,11 +19,12 @@
                 "schooling",
                 "example"
             ],
+            "prompt_key": "prompts/school/pathway",
             "file_path": "../prompts/school/pathway.yml",
             "combined_search_field": "Create learning pathway Prompt to create a learning pathway for a given topic, being aware of the student. ['schooling', 'example']"
         }
     },
-    "prompts_entity_recognition": {
+    "prompts/entity_recognition": {
         "de": {
             "name": "Llama 2 Entit\u00e4tenerkennung",
             "description": "Stelle eine Liste von Klassen (z.B. [Personen, Orte, Essen]) und einen Text zur Verf\u00fcgung. Das Modell wird versuchen, ein JSON-Objekt mit allen gefundenen Objekten zur\u00fcckzugeben, die der jeweiligen Klasse zugeordnet sind.",
@@ -30,6 +32,7 @@
                 "entity_recognition",
                 "example"
             ],
+            "prompt_key": "prompts/entity_recognition",
             "file_path": "../prompts/entity_recognition.yml",
             "combined_search_field": "Llama 2 Entit\u00e4tenerkennung Stelle eine Liste von Klassen (z.B. [Personen, Orte, Essen]) und einen Text zur Verf\u00fcgung. Das Modell wird versuchen, ein JSON-Objekt mit allen gefundenen Objekten zur\u00fcckzugeben, die der jeweiligen Klasse zugeordnet sind. ['entity_recognition', 'example']"
         },
@@ -41,17 +44,19 @@
                 "entity_recognition",
                 "example"
             ],
+            "prompt_key": "prompts/entity_recognition",
             "file_path": "../prompts/entity_recognition.yml",
             "combined_search_field": "Llama 2 entity recognition Provide a list of classes (e.g., [persons, places, food]) followed by a text. The model will try to return a JSON object with all found objects mapped to the respective class. ['entity_recognition', 'example']"
         }
     },
-    "prompts_example": {
+    "prompts/example": {
         "en": {
             "name": "Example prompt",
             "description": "Prompt to use as example",
             "keywords": [
                 "example"
             ],
+            "prompt_key": "prompts/example",
             "file_path": "../prompts/example.yml",
             "combined_search_field": "Example prompt Prompt to use as example ['example']"
         },

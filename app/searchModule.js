@@ -6,6 +6,9 @@ export default class SearchModule {
         document.getElementById("keywordFilter").addEventListener("change", () => {
             this.performSearch();
         });
+        document.getElementById("groupFilter").addEventListener("change", () => {
+            this.performSearch();
+        });
     }
 
     async initializeSearch() {
@@ -44,6 +47,7 @@ export default class SearchModule {
         //this.performSearch();
         this.fuse = new Fuse(flattenedData, options);
         this.populateKeywordFilter();
+        this.populateGroupFilter();
         this.performSearch();
     }
 
@@ -68,6 +72,25 @@ export default class SearchModule {
         }
     }
 
+    populateGroupFilter() {
+        const groupSet = new Set();
+        for (const item of this.flattenedData) {
+            const parts = item.prompt_key.split('/');
+            const folderPath = parts.slice(0, -1).join('/');
+            groupSet.add(folderPath);
+        }
+
+
+        const groupFilterElement = document.getElementById("groupFilter");
+        groupFilterElement.innerHTML = '<option value="">All Groups</option>';  // Reset the dropdown
+
+        for (const group of groupSet) {
+            const optionElement = document.createElement("option");
+            optionElement.value = group;
+            optionElement.textContent = group;
+            groupFilterElement.appendChild(optionElement);
+        }
+    }
 
 
 
@@ -81,6 +104,7 @@ export default class SearchModule {
     performSearch() {
         const query = document.getElementById("searchInput").value.trim();
         const keywordFilter = document.getElementById("keywordFilter").value;
+        const groupFilter = document.getElementById("groupFilter").value;
         const resultBody = document.getElementById("result");
 
         resultBody.innerHTML = '';
@@ -110,16 +134,22 @@ export default class SearchModule {
                     continue;
                 }
 
+                if (groupFilter && !item.prompt_key.includes(groupFilter)) {
+                    console.log("Skipping due to group filter");  // Debug log to check if the item is being skipped
+                    continue;
+                }
+
+
                 const keywordBadges = Array.isArray(item.keywords) ?
                     item.keywords.map(k => `<span class="badge badge-primary clickable-badge" onclick="updateKeywordFilter('${k}')">${k}</span>`).join(' ') : '';
 
 
                 const row = `
                 <tr>
+                <td><a href="#" onclick="switchToGenerateTab('${item.file_path}');">${item.prompt_key}</a></td>
                 <td>${item.name}</td>
                 <td>${item.description}</td>
                 <td>${keywordBadges}</td>
-                <td><a href="#" onclick="switchToGenerateTab('${item.file_path}');">Generate</a></td>
                 </tr>
                 `;
                 resultBody.innerHTML += row;
