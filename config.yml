@@ -1,0 +1,46 @@
+# Optional: Provide API entry point for inference. E.g., a herding-llamas instance. 
+# API_BASE: http://127.0.0.1/api/v1/infer
+
+model_tree:
+  ALL:
+    llama:
+      llama1: 
+      llama2:
+      vicuna:
+      alpaca:
+      koala:
+    mistral:
+    flant5:
+      fastchat:
+    glm:
+    pythia:
+      dolly:
+      oasst:
+    gpt:
+      gpt-3:
+      gpt-3.5-turbo:
+      gpt-4:
+    palm:
+    bloom:
+
+templates:
+  - name: Llama-2 template
+    models: [llama2]
+    value: |-
+      <s>[INST] <<SYS>>
+      {{system_message}}
+      <</SYS>>
+      {{system_wrapper}} [/INST]
+  - name: Mistral template
+    models: [mistral]
+    value: |-
+      <|im_start|>system
+      {{system_message}}<|im_end|>
+      <|im_start|>user
+      {{system_wrapper}}<|im_end|>
+      <|im_start|>assistant    
+  - name: ChatGPT template
+    models: [gpt]
+    value: |-
+      ### System: {{system_message}}
+      ### Human: {{system_wrapper}}

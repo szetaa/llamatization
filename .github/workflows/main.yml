@@ -1,0 +1,44 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main  
+      - prompts
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.9
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run script
+      run: python create_search_index.py
+
+    - name: Prepare files
+      run: |
+        mkdir .public
+        cp -r app/ .public
+        cp -r prompts/ .public
+        cp config.yml .public
+        ls -al app
+        mv .public public
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: public
+        path: public
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
