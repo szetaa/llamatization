@@ -11,6 +11,7 @@
             <select class="form-control" id="language"></select>
         </div>
         </div>
+
         <h2>Variables</h2>
         <div id="dynamic-fields-container">
             {{#fields}}
@@ -20,13 +21,38 @@
             </div>
             {{/fields}}
         </div>
-
     </form>
-    {{#config.API_BASE}}
-        <h2>API call</h2>
-        <pre>tbd</pre>
-    {{/config.API_BASE}}
-    <h2>Prompt preview</h2>
-    <button id="copyButton" class="btn btn-primary">Copy</button>
-    <pre id="prompt_result" class="mt-4">Select a target model!</pre>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="resultTabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="preview-tab" data-toggle="tab" href="#preview" role="tab" aria-controls="preview" aria-selected="true">Prompt Preview</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="api-call-tab" data-toggle="tab" href="#api-call" role="tab" aria-controls="api-call" aria-selected="false">Example API Call</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="preview" role="tabpanel" aria-labelledby="preview-tab">
+            <button id="copyButton" class="btn btn-primary">Copy</button>
+            <pre id="prompt_result" class="mt-4">Select a target model!</pre>
+        </div>
+        <div class="tab-pane" id="api-call" role="tabpanel" aria-labelledby="api-call-tab">
+            {{#config.API_BASE}}
+                <div class="tab-pane" id="api-call" role="tabpanel" aria-labelledby="api-call-tab">
+                    {{#config.API_BASE}}
+                        <h3>Python</h3>
+                        <pre id='apiPython'></pre>
+                        <h3>Java Script</h3>
+                        <pre id='apiJS'></pre>
+
+
+                    {{/config.API_BASE}}
+                </div>
+
+            {{/config.API_BASE}}
+        </div>
+    </div>
 </div>
