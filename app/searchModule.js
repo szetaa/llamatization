@@ -18,10 +18,8 @@ export default class SearchModule {
         const flattenedData = [];
         this.flattenedData = flattenedData;
         for (const promptKey in this.data) {
-            console.log(`Processing promptKey: ${promptKey}`);  // Debugging line
             for (const lang in this.data[promptKey]) {
                 if (lang.length === 2) {  // Only consider 2-character keys as languages
-                    console.log(`Processing lang: ${lang}`);  // Debugging line
                     flattenedData.push({
                         ...this.data[promptKey][lang],
                         promptKey,
@@ -93,15 +91,7 @@ export default class SearchModule {
     }
 
 
-
-    async switchToGenerateTab(filePath) {
-        document.querySelector('a[data-toggle="tab"][href="#generate"]').click();
-        const generator = new DynamicPromptGenerator();
-        console.log()
-        await generator.generatePrompt(filePath);
-    }
-
-    performSearch() {
+    async performSearch() {
         const query = document.getElementById("searchInput").value.trim();
         const keywordFilter = document.getElementById("keywordFilter").value;
         const groupFilter = document.getElementById("groupFilter").value;
@@ -143,10 +133,9 @@ export default class SearchModule {
                 const keywordBadges = Array.isArray(item.keywords) ?
                     item.keywords.map(k => `<span class="badge badge-primary clickable-badge" onclick="updateKeywordFilter('${k}')">${k}</span>`).join(' ') : '';
 
-
                 const row = `
                 <tr>
-                <td><a href="#" onclick="switchToGenerateTab('${item.file_path}');">${item.prompt_key}</a></td>
+                <td><a href="#" onclick="switchToGenerateTab('${item.file_path}','${item.prompt_key}');">${item.prompt_key}</a></td>
                 <td>${item.name}</td>
                 <td>${item.description}</td>
                 <td>${keywordBadges}</td>

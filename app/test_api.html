@@ -20,7 +20,7 @@
 
             console.log(payload)
 
-            const response = await fetch("http://localhost:8091/generate_prompt/", {
+            const response = await fetch("http://localhost:8091/api/v1/generate_prompt/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -41,7 +41,7 @@
     <form onsubmit="submitForm(); return false;">
 
         <label for="prompt_key">Prompt Key:</label>
-        <input type="text" id="prompt_key" name="prompt_key" value="prompts_example"><br><br>
+        <input type="text" id="prompt_key" name="prompt_key" value="prompts/example"><br><br>
 
         <label for="language">Language:</label>
         <input type="text" id="language" name="language" value="en"><br><br>

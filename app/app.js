@@ -25,13 +25,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     // ...
 });
 
-window.switchToGenerateTab = async function (filePath) {
+window.switchToGenerateTab = async function (filePath, promptKey) {
     // Switch to the "Generate" tab
     document.querySelector('a[data-toggle="tab"][href="#generate"]').click();
 
     // Initialize the DynamicPromptGenerator class and generate the prompt
     const generator = new DynamicPromptGenerator();
-    await generator.generatePrompt(filePath);
+    await generator.generatePrompt(filePath, promptKey);
 };
 
 

@@ -48,7 +48,6 @@ export default class DynamicPromptGenerator {
 
     async initializeApp() {
         const config = await this.getConfig();
-        console.log(this.config)
     }
 
     traverseObject(obj, modelSet, langSet, depth = 0) {
@@ -169,9 +168,6 @@ export default class DynamicPromptGenerator {
             const response = await fetch('./search_form.mustache');
             const template = await response.text();
 
-            console.log('YAML:', parsedYaml)
-            console.log('CONF:', config)
-
             // Render the template
             const rendered = Mustache.render(template, { fields, 'parsedYaml': parsedYaml, 'config': config });
             document.getElementById('dynamic-form-container').innerHTML = rendered;
@@ -225,7 +221,7 @@ export default class DynamicPromptGenerator {
 
 
 
-    async generatePrompt(filePath) {
+    async generatePrompt(filePath, promptKey) {
         try {
             const self = this;
             this.parsedYaml = await this.fetchAndParseYaml(filePath); // Store it here
@@ -248,7 +244,7 @@ export default class DynamicPromptGenerator {
             // Populate dropdowns and restore selected values
             this.populateDropdowns(models, languages, "model", "language", selectedModel, selectedLang);
 
-            this.setupEventListeners(this.parsedYaml);
+            this.setupEventListeners(this.parsedYaml, promptKey);
         } catch (e) {
             console.error(e);
         }
@@ -302,10 +298,11 @@ export default class DynamicPromptGenerator {
 
 
 
-    setupEventListeners(parsedYaml) {
+    async setupEventListeners(parsedYaml, promptKey) {
         const self = this;
+        self.prompt_key = promptKey
 
-        async function updateFields() {
+        async function updateFields(promptKey) {
             const selectedModel = document.getElementById('model').value;
             const selectedLang = document.getElementById('language').value || 'en';
 
@@ -337,10 +334,64 @@ export default class DynamicPromptGenerator {
             });
 
             await updatePromptResult();  // Update the result after updating the fields
+            await updateApiCall(selectedModel, selectedLang);
         }
 
 
+        async function updateApiCall(selectedModel, selectedLang) {
+            const config = await self.getConfig();
+            let variables = {};
+            document.querySelectorAll('.updatePrompt').forEach(input => {
+                if (!input.id.startsWith("system_")) {
+                    variables[input.id] = input.value;
+                }
+            });
+            const variablesStr = Object.entries(variables).map(
+                ([key, value]) => `"${key}": "${value.toString().substring(0, 10)}..."`
+            ).join(", ");
 
+            const apiJS = `
+    const payload = {
+        "prompt_key": "${self.prompt_key}",
+        "language": "${selectedLang}",
+        "model": "${selectedModel}",
+        "variables": { ${variablesStr} } // <-- fill those dynamically
+    };
+    const response = await fetch("${config.API_BASE}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    });
+    const data = await response.json();
+    console.log(data)
+            `;
+
+            document.getElementById("apiJS").textContent = apiJS;
+            const apiPython = `
+    import json
+    import requests
+    
+    api_base = "${config.API_BASE}"
+    
+    payload = {
+        "prompt_key": "${self.prompt_key}",
+        "language": "${selectedLang}",
+        "model": "${selectedModel}",
+        "variables": { ${variablesStr} } # <-- fill those dynamically
+    }
+    response = requests.post(
+        url=api_base,
+        headers={"Content-Type": "application/json"},
+        json=payload
+    )
+    data = response.json()
+    print(data)
+            `;
+
+            document.getElementById("apiPython").textContent = apiPython;
+        }
 
 
         async function updatePromptResult() {
