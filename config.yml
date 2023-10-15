@@ -1,5 +1,5 @@
-# Optional: Provide API entry point for inference. E.g., a herding-llamas instance. 
-# API_BASE: http://127.0.0.1/api/v1/infer
+# Optional: Provide API entry point for prompt construction
+API_BASE: http://localhost/api/v1/generate_prompt/
 
 model_tree:
   ALL:

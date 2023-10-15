@@ -6,6 +6,9 @@ export default class SearchModule {
         document.getElementById("keywordFilter").addEventListener("change", () => {
             this.performSearch();
         });
+        document.getElementById("groupFilter").addEventListener("change", () => {
+            this.performSearch();
+        });
     }
 
     async initializeSearch() {
@@ -15,10 +18,8 @@ export default class SearchModule {
         const flattenedData = [];
         this.flattenedData = flattenedData;
         for (const promptKey in this.data) {
-            console.log(`Processing promptKey: ${promptKey}`);  // Debugging line
             for (const lang in this.data[promptKey]) {
                 if (lang.length === 2) {  // Only consider 2-character keys as languages
-                    console.log(`Processing lang: ${lang}`);  // Debugging line
                     flattenedData.push({
                         ...this.data[promptKey][lang],
                         promptKey,
@@ -44,6 +45,7 @@ export default class SearchModule {
         //this.performSearch();
         this.fuse = new Fuse(flattenedData, options);
         this.populateKeywordFilter();
+        this.populateGroupFilter();
         this.performSearch();
     }
 
@@ -68,19 +70,31 @@ export default class SearchModule {
         }
     }
 
+    populateGroupFilter() {
+        const groupSet = new Set();
+        for (const item of this.flattenedData) {
+            const parts = item.prompt_key.split('/');
+            const folderPath = parts.slice(0, -1).join('/');
+            groupSet.add(folderPath);
+        }
 
 
+        const groupFilterElement = document.getElementById("groupFilter");
+        groupFilterElement.innerHTML = '<option value="">All Groups</option>';  // Reset the dropdown
 
-    async switchToGenerateTab(filePath) {
-        document.querySelector('a[data-toggle="tab"][href="#generate"]').click();
-        const generator = new DynamicPromptGenerator();
-        console.log()
-        await generator.generatePrompt(filePath);
+        for (const group of groupSet) {
+            const optionElement = document.createElement("option");
+            optionElement.value = group;
+            optionElement.textContent = group;
+            groupFilterElement.appendChild(optionElement);
+        }
     }
 
-    performSearch() {
+
+    async performSearch() {
         const query = document.getElementById("searchInput").value.trim();
         const keywordFilter = document.getElementById("keywordFilter").value;
+        const groupFilter = document.getElementById("groupFilter").value;
         const resultBody = document.getElementById("result");
 
         resultBody.innerHTML = '';
@@ -110,16 +124,21 @@ export default class SearchModule {
                     continue;
                 }
 
+                if (groupFilter && !item.prompt_key.includes(groupFilter)) {
+                    console.log("Skipping due to group filter");  // Debug log to check if the item is being skipped
+                    continue;
+                }
+
+
                 const keywordBadges = Array.isArray(item.keywords) ?
                     item.keywords.map(k => `<span class="badge badge-primary clickable-badge" onclick="updateKeywordFilter('${k}')">${k}</span>`).join(' ') : '';
 
-
                 const row = `
                 <tr>
+                <td><a href="#" onclick="switchToGenerateTab('${item.file_path}','${item.prompt_key}');">${item.prompt_key}</a></td>
                 <td>${item.name}</td>
                 <td>${item.description}</td>
                 <td>${keywordBadges}</td>
-                <td><a href="#" onclick="switchToGenerateTab('${item.file_path}');">Generate</a></td>
                 </tr>
                 `;
                 resultBody.innerHTML += row;

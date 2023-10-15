@@ -14,6 +14,12 @@
 
     <div class="container">
         <h1 class="mt-4 mb-4">Llamatization (L11n)</h1>
+        <p>
+            Llamatization, or l11n, is a framework created to adapt LLM prompts for various LLM types. Drawing
+            inspiration
+            from localization (l10n) and internationalization (i18n) principles, l11n addresses the dual challenge of
+            localizing prompts to individual LLMs and internationalizing them to support multiple languages.
+        </p>
         <div id="alert-container"></div>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs">
@@ -29,15 +35,22 @@
         <div class="tab-content mt-4">
             <div id="search" class="container tab-pane active">
                 <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label for="keywordFilter">Filter by Keyword (here or click on a <span
-                                class="badge badge-primary">bubble</span>)</label>
-                        <select class="form-control" id="keywordFilter">
-                            <option value="">All Keywords</option>
+                    <div class="col-md-4 form-group">
+                        <label for="keywordFilter">Select group</label>
+                        <select class="form-control" id="groupFilter">
+                            <option value="">All groups</option>
                             <!-- Additional options will be populated here -->
                         </select>
                     </div>
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-4 form-group">
+                        <label for="keywordFilter">Filter by Keyword (here or click on a <span
+                                class="badge badge-primary">bubble</span>)</label>
+                        <select class="form-control" id="keywordFilter">
+                            <option value="">All keywords</option>
+                            <!-- Additional options will be populated here -->
+                        </select>
+                    </div>
+                    <div class="col-md-4 form-group">
                         <label for="searchInput">Search (full text)</label>
                         <input type="text" class="form-control" id="searchInput" placeholder="Search...">
                     </div>
@@ -46,6 +59,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <th>Generate prompt</th>
                             <th>Name</th>
                             <th>Description</th>
                             <th>Keywords</th>

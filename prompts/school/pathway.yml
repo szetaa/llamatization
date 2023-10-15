@@ -59,7 +59,7 @@ variables:
         ### teaching topic:
         {{topic}}
         ### Your answer is required to be a bullet point list.      
-    - tags: [en, all]
+    - tags: [de, all]
       value: |-
         ### Vorstellung deines Schülers: {{student}}
         Berücksichtige den Hintergrund des Schülers bei der Erstellung deiner Antwort (insbesondere Alter und Interessen)

@@ -1,37 +1,18 @@
 {
-    "prompts_example": {
-        "de": {
-            "name": "Beispiel Prompt",
-            "description": "Prompt als Beispiel",
-            "keywords": [
-                "example"
-            ],
-            "file_path": "../prompts/example.yml",
-            "combined_search_field": "Beispiel Prompt Prompt als Beispiel ['example']"
-        },
-        "file_path": "../prompts/example.yml",
+    "prompts/example": {
         "en": {
             "name": "Example prompt",
             "description": "Prompt to use as example",
             "keywords": [
                 "example"
             ],
+            "prompt_key": "prompts/example",
             "file_path": "../prompts/example.yml",
             "combined_search_field": "Example prompt Prompt to use as example ['example']"
-        }
-    },
-    "prompts_entity_recognition": {
-        "de": {
-            "name": "Llama 2 Entit\u00e4tenerkennung",
-            "description": "Stelle eine Liste von Klassen (z.B. [Personen, Orte, Essen]) und einen Text zur Verf\u00fcgung. Das Modell wird versuchen, ein JSON-Objekt mit allen gefundenen Objekten zur\u00fcckzugeben, die der jeweiligen Klasse zugeordnet sind.",
-            "keywords": [
-                "entity_recognition",
-                "example"
-            ],
-            "file_path": "../prompts/entity_recognition.yml",
-            "combined_search_field": "Llama 2 Entit\u00e4tenerkennung Stelle eine Liste von Klassen (z.B. [Personen, Orte, Essen]) und einen Text zur Verf\u00fcgung. Das Modell wird versuchen, ein JSON-Objekt mit allen gefundenen Objekten zur\u00fcckzugeben, die der jeweiligen Klasse zugeordnet sind. ['entity_recognition', 'example']"
         },
-        "file_path": "../prompts/entity_recognition.yml",
+        "file_path": "../prompts/example.yml"
+    },
+    "prompts/entity_recognition": {
         "en": {
             "name": "Llama 2 entity recognition",
             "description": "Provide a list of classes (e.g., [persons, places, food]) followed by a text. The model will try to return a JSON object with all found objects mapped to the respective class.",
@@ -39,22 +20,24 @@
                 "entity_recognition",
                 "example"
             ],
+            "prompt_key": "prompts/entity_recognition",
             "file_path": "../prompts/entity_recognition.yml",
             "combined_search_field": "Llama 2 entity recognition Provide a list of classes (e.g., [persons, places, food]) followed by a text. The model will try to return a JSON object with all found objects mapped to the respective class. ['entity_recognition', 'example']"
-        }
-    },
-    "prompts_school_pathway": {
+        },
+        "file_path": "../prompts/entity_recognition.yml",
         "de": {
-            "name": "Lernpfad erstellen",
-            "description": "Prompt fuer Lernpfad nach Student fuer ein gegebenes Thema erstellen.",
+            "name": "Llama 2 Entit\u00e4tenerkennung",
+            "description": "Stelle eine Liste von Klassen (z.B. [Personen, Orte, Essen]) und einen Text zur Verf\u00fcgung. Das Modell wird versuchen, ein JSON-Objekt mit allen gefundenen Objekten zur\u00fcckzugeben, die der jeweiligen Klasse zugeordnet sind.",
             "keywords": [
-                "schooling",
+                "entity_recognition",
                 "example"
             ],
-            "file_path": "../prompts/school/pathway.yml",
-            "combined_search_field": "Lernpfad erstellen Prompt fuer Lernpfad nach Student fuer ein gegebenes Thema erstellen. ['schooling', 'example']"
-        },
-        "file_path": "../prompts/school/pathway.yml",
+            "prompt_key": "prompts/entity_recognition",
+            "file_path": "../prompts/entity_recognition.yml",
+            "combined_search_field": "Llama 2 Entit\u00e4tenerkennung Stelle eine Liste von Klassen (z.B. [Personen, Orte, Essen]) und einen Text zur Verf\u00fcgung. Das Modell wird versuchen, ein JSON-Objekt mit allen gefundenen Objekten zur\u00fcckzugeben, die der jeweiligen Klasse zugeordnet sind. ['entity_recognition', 'example']"
+        }
+    },
+    "prompts/school/pathway": {
         "en": {
             "name": "Create learning pathway",
             "description": "Prompt to create a learning pathway for a given topic, being aware of the student.",
@@ -62,55 +45,21 @@
                 "schooling",
                 "example"
             ],
+            "prompt_key": "prompts/school/pathway",
             "file_path": "../prompts/school/pathway.yml",
             "combined_search_field": "Create learning pathway Prompt to create a learning pathway for a given topic, being aware of the student. ['schooling', 'example']"
-        }
-    },
-    "prompts_school_questionnaire": {
+        },
+        "file_path": "../prompts/school/pathway.yml",
         "de": {
-            "name": "Fragen f\u00fcr den Sch\u00fcler generieren",
-            "description": "Aufforderung, einen Fragebogen f\u00fcr einen gegebenen Lernpfad und ein Thema zu erstellen.",
-            "keywords": [],
-            "file_path": "../prompts/school/questionnaire.yml",
-            "combined_search_field": "Fragen f\u00fcr den Sch\u00fcler generieren Aufforderung, einen Fragebogen f\u00fcr einen gegebenen Lernpfad und ein Thema zu erstellen. []"
-        },
-        "file_path": "../prompts/school/questionnaire.yml",
-        "en": {
-            "name": "Generate questions for student",
-            "description": "Prompt to create questionnary for a given learning pathway and topic.",
-            "keywords": [],
-            "file_path": "../prompts/school/questionnaire.yml",
-            "combined_search_field": "Generate questions for student Prompt to create questionnary for a given learning pathway and topic. []"
+            "name": "Lernpfad erstellen",
+            "description": "Prompt fuer Lernpfad nach Student fuer ein gegebenes Thema erstellen.",
+            "keywords": [
+                "schooling",
+                "example"
+            ],
+            "prompt_key": "prompts/school/pathway",
+            "file_path": "../prompts/school/pathway.yml",
+            "combined_search_field": "Lernpfad erstellen Prompt fuer Lernpfad nach Student fuer ein gegebenes Thema erstellen. ['schooling', 'example']"
         }
-    },
-    "prompts_school_chat": {
-        "en": {
-            "name": "Chat with student",
-            "description": "Keep a conversation with the student, answering questions, and helping to navigate the learning pathway.",
-            "keywords": [],
-            "file_path": "../prompts/school/chat.yml",
-            "combined_search_field": "Chat with student Keep a conversation with the student, answering questions, and helping to navigate the learning pathway. []"
-        },
-        "file_path": "../prompts/school/chat.yml"
-    },
-    "prompts_school_assessment": {
-        "en": {
-            "name": "Test question assessment",
-            "description": "Assess the student's grasp on the topic based on a question they've answered, and give a grade.",
-            "keywords": [],
-            "file_path": "../prompts/school/assessment.yml",
-            "combined_search_field": "Test question assessment Assess the student's grasp on the topic based on a question they've answered, and give a grade. []"
-        },
-        "file_path": "../prompts/school/assessment.yml"
-    },
-    "prompts_school_assess_progress": {
-        "en": {
-            "name": "Measure studen't progress",
-            "description": "Measure the studen't progress on a topic based on the questions asked as a proxy for topics explored.",
-            "keywords": [],
-            "file_path": "../prompts/school/assess_progress.yml",
-            "combined_search_field": "Measure studen't progress Measure the studen't progress on a topic based on the questions asked as a proxy for topics explored. []"
-        },
-        "file_path": "../prompts/school/assess_progress.yml"
     }
 }
