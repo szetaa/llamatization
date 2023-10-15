@@ -31,3 +31,7 @@ Adding a new promtp file will re-render the search index.
 ## How to search?
 
 https://szetaa.github.io/llamatization/app/index.html
+
+## What's next?
+
+Make this the new default prompt-generator for the [herding-llamas](https://github.com/szetaa/herding_llamas) project.
