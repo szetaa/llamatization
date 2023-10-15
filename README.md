@@ -8,6 +8,15 @@ I just want to explore prompts. Where can I find the search index and online gen
 
 Here: https://szetaa.github.io/llamatization/app/index.html
 
+## Screenshots
+
+### Search index
+![Search index](doc/search_index.png)
+### Generate prompt
+![Generate prompt](doc/generate_prompt.png)
+### API guidance for your prompt
+![API call](doc/api_call.png)
+
 ## Why?
 
 Language models are not only sensitive to the [prompt syntax](https://github.com/szetaa/llamatization/blob/main/config.yml#L30), but also to the instruction itself. 
@@ -18,20 +27,22 @@ Llamatization handles both. You can in one prompt definition start with what wor
 
 On top of this, it is possible to create mutlilingual prompts, which extend to a different language only by changing a parameter.
 
-## How prompts are stored
+## How to use or contribute?
 
-Prompts are stored as YAML files. 
+### Use
+You can simply clone the repository and [run the API locally](https://github.com/szetaa/llamatization/blob/main/api/start_api.sh).
 
-Example:
+Everytime you updated or added prompts, update the search-index (script [here](https://github.com/szetaa/llamatization/blob/prompts/create_search_index.py)). 
 
-https://github.com/szetaa/llamatization/tree/main/prompts
+Please note that if you maintain your prompts on GitHub or GitLab, the default pipelines will automatically update the search-index (published as GitHub/GitLab pages)
 
-Adding a new promtp file will re-render the search index.
+### Contribute
+Feel invited to contribute with your own prompts:
 
-## How to search?
-
-https://szetaa.github.io/llamatization/app/index.html
+1. Create a fork
+2. Add your prompts to the [/prompts/contrib/](https://github.com/szetaa/llamatization/tree/main/prompts/contrib/) folder (you can also create a new sub-folder)
+3. Create a pull request
 
 ## What's next?
 
-Make this the new default prompt-generator for the [herding-llamas](https://github.com/szetaa/herding_llamas) project.
+Make Llamatization the new default prompt-generator for the [herding-llamas](https://github.com/szetaa/herding_llamas) project.
